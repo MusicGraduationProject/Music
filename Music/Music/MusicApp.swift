@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct MusicApp: App {
+    @StateObject var musicModel: MusicModel = MusicModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                WelcomPage()
+                    .environmentObject(musicModel)
+            }
+            
         }
     }
 }
