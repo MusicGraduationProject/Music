@@ -17,12 +17,13 @@ struct MusicSelectView: View {
                         .font(.caption)
                 }
             }
-            .sheet(isPresented: $showFilePicker) {
-                DocumentPicker(allowedTypes: ["mp3", "wav"]) { url in
-                    // Handle selected file URL
-                    print("Selected file URL: \(url)")
-                    // 추가 로직: MIDI 파일 업로드 처리
-                }
+            
+        }
+        .sheet(isPresented: $showFilePicker) {
+            DocumentPicker(allowedTypes: ["mp3", "wav"]) { url in
+                // Handle selected file URL
+                print("Selected file URL: \(url)")
+                // 추가 로직: MIDI 파일 업로드 처리
             }
         }
         .padding()
