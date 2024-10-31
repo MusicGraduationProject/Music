@@ -1,24 +1,70 @@
 import SwiftUI
 
 struct MusicSelectView: View {
+    @EnvironmentObject var musicModel: MusicModel
     @State private var showFilePicker = false // 파일 선택기 표시 여부
-
+    
     var body: some View {
         VStack {
-            NavigationLink(destination: MusicPlayView()) {
-                Text("Music Play")
-            }
-            Button(action: { showFilePicker = true }) {
-                VStack {
-                    Image(systemName: "icloud.and.arrow.up")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                    Text("Upload MIDI")
-                        .font(.caption)
+            
+            VStack {
+                HStack {
+                    
+                    Text("sample")
+                    Spacer()
+                    Button(action: {
+                        showFilePicker.toggle()
+                    }, label: {
+                        /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                    })
+                }
+                
+                HStack {
+                    Spacer()
+                    Text("음악이름")
                 }
             }
+            .padding()
+            .border(.black)
             
+            
+            VStack {
+                HStack {
+                    
+                    Text("mr")
+                    Spacer()
+                    Button(action: {
+                        showFilePicker.toggle()
+                    }, label: {
+                        /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                    })
+                }
+                
+                HStack {
+                    Spacer()
+                    Text("음악이름")
+                }
+            }
+            .padding()
+            .border(.black)
+            
+            Spacer()
+            
+            
+            Spacer()
+            
+            
+            NavigationLink(destination: MusicPlayView()
+                .environmentObject(musicModel)) {
+                ZStack {
+                    Capsule()
+                        .frame(width: 300, height: 50)
+                    Text("Music Play")
+                        .foregroundColor(.white)
+                }
+            }
         }
+        .padding()
         .sheet(isPresented: $showFilePicker) {
             DocumentPicker(allowedTypes: ["mp3", "wav"]) { url in
                 // Handle selected file URL
@@ -26,12 +72,12 @@ struct MusicSelectView: View {
                 // 추가 로직: MIDI 파일 업로드 처리
             }
         }
-        .padding()
     }
 }
 
 #Preview {
     NavigationView {
         MusicSelectView()
+            .environmentObject(MusicModel())
     }
 }
