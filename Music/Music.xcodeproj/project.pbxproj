@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DF0DA2582CD36533002DB9D6 /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0DA2562CD36533002DB9D6 /* MusicModel.swift */; };
 		DF0DA25B2CD36605002DB9D6 /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0DA25A2CD36605002DB9D6 /* DocumentPicker.swift */; };
+		DF0DA25F2CD369A0002DB9D6 /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0DA25E2CD369A0002DB9D6 /* MusicModel.swift */; };
 		DF265D4A2CCA1ABF00333964 /* MusicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF265D492CCA1ABF00333964 /* MusicApp.swift */; };
 		DF265D4C2CCA1ABF00333964 /* WelcomPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF265D4B2CCA1ABF00333964 /* WelcomPage.swift */; };
 		DF265D4E2CCA1AC000333964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF265D4D2CCA1AC000333964 /* Assets.xcassets */; };
@@ -18,8 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DF0DA2562CD36533002DB9D6 /* MusicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
 		DF0DA25A2CD36605002DB9D6 /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
+		DF0DA25E2CD369A0002DB9D6 /* MusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
 		DF265D462CCA1ABF00333964 /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF265D492CCA1ABF00333964 /* MusicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicApp.swift; sourceTree = "<group>"; };
 		DF265D4B2CCA1ABF00333964 /* WelcomPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomPage.swift; sourceTree = "<group>"; };
@@ -40,21 +40,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DF0DA2572CD36533002DB9D6 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				DF0DA2562CD36533002DB9D6 /* MusicModel.swift */,
-			);
-			name = Model;
-			path = "../../../../../../Desktop/jw_branch/Music/Music-main/Music/Music/Model";
-			sourceTree = "<group>";
-		};
 		DF0DA2592CD365FA002DB9D6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				DF0DA25A2CD36605002DB9D6 /* DocumentPicker.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		DF0DA25D2CD3699A002DB9D6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DF0DA25E2CD369A0002DB9D6 /* MusicModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DF265D3D2CCA1ABF00333964 = {
@@ -76,8 +75,8 @@
 		DF265D482CCA1ABF00333964 /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				DF0DA25D2CD3699A002DB9D6 /* Model */,
 				DF0DA2592CD365FA002DB9D6 /* Views */,
-				DF0DA2572CD36533002DB9D6 /* Model */,
 				DF265D492CCA1ABF00333964 /* MusicApp.swift */,
 				DF265D4B2CCA1ABF00333964 /* WelcomPage.swift */,
 				DFC5AAF32CCA1E8D00052326 /* MusicSelectView.swift */,
@@ -169,9 +168,9 @@
 				DFC5AAF62CCA1E9F00052326 /* MusicPlayView.swift in Sources */,
 				DF265D4C2CCA1ABF00333964 /* WelcomPage.swift in Sources */,
 				DFC5AAF42CCA1E8D00052326 /* MusicSelectView.swift in Sources */,
-				DF0DA2582CD36533002DB9D6 /* MusicModel.swift in Sources */,
 				DF0DA25B2CD36605002DB9D6 /* DocumentPicker.swift in Sources */,
 				DF265D4A2CCA1ABF00333964 /* MusicApp.swift in Sources */,
+				DF0DA25F2CD369A0002DB9D6 /* MusicModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
