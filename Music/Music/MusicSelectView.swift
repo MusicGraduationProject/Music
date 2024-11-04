@@ -1,83 +1,116 @@
 import SwiftUI
 
 struct MusicSelectView: View {
-    @EnvironmentObject var musicModel: MusicModel
-    @State private var showFilePicker = false // 파일 선택기 표시 여부
+    @EnvironmentObject var musicModel: MusicModel  // environmentObject로 전달된 MusicModel 사용
+    @State private var showFilePicker = false
+    @State private var sampleMusicName: String = "음악 이름"
+    @State private var mrMusicName: String = "음악 이름"
+    @State private var isSampleSelected = true
     
     var body: some View {
-        VStack {
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
             
-            VStack {
-                HStack {
-                    
-                    Text("sample")
-                    Spacer()
-                    Button(action: {
-                        showFilePicker.toggle()
-                    }, label: {
-                        /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-                    })
-                }
+            VStack(spacing: 20) {
                 
-                HStack {
-                    Spacer()
-                    Text("음악이름")
+                // Sample 섹션
+                VStack {
+                    HStack {
+                        Label("Sample", systemImage: "music.note")
+                            .foregroundColor(.white)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            isSampleSelected = true
+                            showFilePicker.toggle()
+                        }) {
+                            Text("Select File")
+                                .foregroundColor(.white)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(Color.red)
+                    }
+                    
+                    HStack {
+                        Spacer()
+                        Text(sampleMusicName)
+                            .foregroundColor(.white)
+                    }
+                }
+                .padding()
+                .border(Color.white)
+
+                // MR 섹션
+                VStack {
+                    HStack {
+                        Label("MR", systemImage: "music.mic")
+                            .foregroundColor(.white)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            isSampleSelected = false
+                            showFilePicker.toggle()
+                        }) {
+                            Text("Select File")
+                                .foregroundColor(.white)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(Color.red)
+                    }
+                    
+                    HStack {
+                        Spacer()
+                        Text(mrMusicName)
+                            .foregroundColor(.white)
+                    }
+                }
+                .padding()
+                .border(Color.white)
+
+                Spacer()
+
+                // MusicPlayView로 이동하는 링크
+                NavigationLink(destination: MusicPlayView()) {
+                    ZStack {
+                        Capsule()
+                            .frame(width: 300, height: 50)
+                            .foregroundColor(.blue)
+
+                        Text("Music Play")
+                            .foregroundColor(.white)
+                    }
                 }
             }
             .padding()
-            .border(.black)
-            
-            
-            VStack {
-                HStack {
-                    
-                    Text("mr")
-                    Spacer()
-                    Button(action: {
-                        showFilePicker.toggle()
-                    }, label: {
-                        /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-                    })
-                }
-                
-                HStack {
-                    Spacer()
-                    Text("음악이름")
-                }
-            }
-            .padding()
-            .border(.black)
-            
-            Spacer()
-            
-            
-            Spacer()
-            
-            
-            NavigationLink(destination: MusicPlayView()
-                .environmentObject(musicModel)) {
-                ZStack {
-                    Capsule()
-                        .frame(width: 300, height: 50)
-                    Text("Music Play")
-                        .foregroundColor(.white)
-                }
-            }
         }
-        .padding()
+        // 파일 선택기 호출 및 결과 처리
         .sheet(isPresented: $showFilePicker) {
-            DocumentPicker(allowedTypes: ["mp3", "wav"]) { url in
-                // Handle selected file URL
-                print("Selected file URL: \(url)")
-                // 추가 로직: MIDI 파일 업로드 처리
+            DocumentPicker(allowedTypes: ["public.audio"]) { result in
+                switch result {
+                case .success(let urls):  // 성공적으로 URL을 가져왔을 때
+                    guard let url = urls.first else { return }
+
+                    let fileName = url.lastPathComponent
+                    
+                    if isSampleSelected {
+                        sampleMusicName = fileName  // Sample 파일의 이름 업데이트
+                    } else {
+                        mrMusicName = fileName  // MR 파일의 이름 업데이트
+
+                    }
+
+                case .failure(let error):  // 파일 선택 실패 시 에러 처리
+                    print("Error selecting file: \(error.localizedDescription)")
+                }
             }
         }
     }
 }
 
-#Preview {
-    NavigationView {
-        MusicSelectView()
-            .environmentObject(MusicModel())
+struct MusicSelectView_Previews: PreviewProvider {
+    static var previews: some View {
+        MusicSelectView().environmentObject(MusicModel())
     }
 }
