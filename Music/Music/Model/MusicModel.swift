@@ -32,9 +32,6 @@ class MusicModel: ObservableObject {
             let dic = try! NSDictionary(contentsOf: bundle, error: ())
             let url = dic["url"] as? String ?? ""
             self.url = url
-            upload(file1: Music(name:""), file2: Music(name:"")) { Music in
-                print("Asdf")
-            }
         } else {
             print("fail to load bundle")
         }
