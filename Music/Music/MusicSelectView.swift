@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 struct MusicSelectView: View {
     @EnvironmentObject var musicModel: MusicModel  // environmentObject로 전달된 MusicModel 사용
@@ -6,6 +7,8 @@ struct MusicSelectView: View {
     @State private var sampleMusicName: String = "음악 이름"
     @State private var mrMusicName: String = "음악 이름"
     @State private var isSampleSelected = true
+    
+    @StateObject private var audioPlayerViewModel = AudioPlayerViewModel()  // 오디오 플레이어 상태 관리
     
     var body: some View {
         ZStack {
@@ -36,6 +39,18 @@ struct MusicSelectView: View {
                         Spacer()
                         Text(sampleMusicName)
                             .foregroundColor(.white)
+                    }
+                    
+                    // 음악 파일이 선택되면 재생 버튼 표시
+                    if sampleMusicName != "음악 이름" {
+                        Button(action: {
+                            audioPlayerViewModel.playOrPause()
+                        }) {
+                            Image(systemName: audioPlayerViewModel.isPlaying ? "pause.circle" : "play.circle")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.white)
+                        }
                     }
                 }
                 .padding()
@@ -96,9 +111,9 @@ struct MusicSelectView: View {
                     
                     if isSampleSelected {
                         sampleMusicName = fileName  // Sample 파일의 이름 업데이트
+                        audioPlayerViewModel.initializePlayer(with: url)  // 오디오 플레이어 초기화
                     } else {
                         mrMusicName = fileName  // MR 파일의 이름 업데이트
-
                     }
 
                 case .failure(let error):  // 파일 선택 실패 시 에러 처리
