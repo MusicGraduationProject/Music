@@ -13,6 +13,8 @@
 		DF265D4C2CCA1ABF00333964 /* WelcomPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF265D4B2CCA1ABF00333964 /* WelcomPage.swift */; };
 		DF265D4E2CCA1AC000333964 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF265D4D2CCA1AC000333964 /* Assets.xcassets */; };
 		DF265D512CCA1AC000333964 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF265D502CCA1AC000333964 /* Preview Assets.xcassets */; };
+		DF84239E2CD9D5C800D5C555 /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF84239D2CD9D5C800D5C555 /* Music.swift */; };
+		DF8423A02CD9DAB500D5C555 /* maininfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF84239F2CD9DAB500D5C555 /* maininfo.plist */; };
 		DFC5AAF42CCA1E8D00052326 /* MusicSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC5AAF32CCA1E8D00052326 /* MusicSelectView.swift */; };
 		DFC5AAF62CCA1E9F00052326 /* MusicPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC5AAF52CCA1E9F00052326 /* MusicPlayView.swift */; };
 /* End PBXBuildFile section */
@@ -25,6 +27,8 @@
 		DF265D4B2CCA1ABF00333964 /* WelcomPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomPage.swift; sourceTree = "<group>"; };
 		DF265D4D2CCA1AC000333964 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF265D502CCA1AC000333964 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DF84239D2CD9D5C800D5C555 /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
+		DF84239F2CD9DAB500D5C555 /* maininfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = maininfo.plist; sourceTree = "<group>"; };
 		DFC5AAF32CCA1E8D00052326 /* MusicSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSelectView.swift; sourceTree = "<group>"; };
 		DFC5AAF52CCA1E9F00052326 /* MusicPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				DF0DA25E2CD369A0002DB9D6 /* MusicModel.swift */,
+				DF84239D2CD9D5C800D5C555 /* Music.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -75,6 +80,7 @@
 		DF265D482CCA1ABF00333964 /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				DF84239F2CD9DAB500D5C555 /* maininfo.plist */,
 				DF0DA25D2CD3699A002DB9D6 /* Model */,
 				DF0DA2592CD365FA002DB9D6 /* Views */,
 				DF265D492CCA1ABF00333964 /* MusicApp.swift */,
@@ -155,6 +161,7 @@
 			files = (
 				DF265D512CCA1AC000333964 /* Preview Assets.xcassets in Resources */,
 				DF265D4E2CCA1AC000333964 /* Assets.xcassets in Resources */,
+				DF8423A02CD9DAB500D5C555 /* maininfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +176,7 @@
 				DF265D4C2CCA1ABF00333964 /* WelcomPage.swift in Sources */,
 				DFC5AAF42CCA1E8D00052326 /* MusicSelectView.swift in Sources */,
 				DF0DA25B2CD36605002DB9D6 /* DocumentPicker.swift in Sources */,
+				DF84239E2CD9D5C800D5C555 /* Music.swift in Sources */,
 				DF265D4A2CCA1ABF00333964 /* MusicApp.swift in Sources */,
 				DF0DA25F2CD369A0002DB9D6 /* MusicModel.swift in Sources */,
 			);
