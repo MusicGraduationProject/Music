@@ -87,15 +87,31 @@ struct MusicSelectView: View {
                 Spacer()
 
                 // MusicPlayView로 이동하는 링크
-                NavigationLink(destination: MusicPlayView()) {
+                
+                NavigationLink(destination: MusicPlayView()
+                    .environmentObject(musicModel)) {
                     ZStack {
                         Capsule()
                             .frame(width: 300, height: 50)
                             .foregroundColor(.blue)
-
-                        Text("Music Play")
-                            .foregroundColor(.white)
+                        
+                        if musicModel.isLoading {
+                            ProgressView()
+                        } else {
+                            Text("Music Play")
+                                .foregroundColor(.white)
+                        }
                     }
+                }
+                .onTapGesture {
+                    musicModel.isLoading = true
+                    Task {
+                        await musicModel.upload(file1: Music(name: "", data: Data(count: 100)), file2: Music(name: "", data: Data(count: 100))) { music in
+                            
+                        }
+                    }
+                    
+
                 }
             }
             .padding()
@@ -126,6 +142,9 @@ struct MusicSelectView: View {
 
 struct MusicSelectView_Previews: PreviewProvider {
     static var previews: some View {
-        MusicSelectView().environmentObject(MusicModel())
+        NavigationView {
+            MusicSelectView().environmentObject(MusicModel())
+        }
+        
     }
 }

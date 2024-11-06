@@ -11,4 +11,5 @@ struct Music: Identifiable {
     var id: String = UUID().uuidString
     var name: String
     var url: String = ""
+    var data: Data
 }

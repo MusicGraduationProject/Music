@@ -83,6 +83,7 @@
 import SwiftUI
 
 struct WelcomePage: View {
+    @EnvironmentObject var musicModel: MusicModel
     var body: some View {
         VStack {
             // 기존 레이아웃 코드 유지
@@ -106,7 +107,8 @@ struct WelcomePage: View {
             
             Spacer()
             // MusicSelectView로 이동하는 버튼
-            NavigationLink(destination: MusicSelectView()) {
+            NavigationLink(destination: MusicSelectView()
+                .environmentObject(musicModel)) {
                 Text("Go to Music Select") // "Music Select" 버튼 텍스트
                     .foregroundColor(.white)
                     .padding()
@@ -121,5 +123,6 @@ struct WelcomePage: View {
 struct WelcomePage_Previews: PreviewProvider {
     static var previews: some View {
         WelcomePage()
+            .environmentObject(MusicModel())
     }
 }
