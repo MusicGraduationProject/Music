@@ -10,6 +10,6 @@ import Foundation
 struct Music: Identifiable {
     var id: String = UUID().uuidString
     var name: String
-    var url: String = ""
+    var imageUrl: URL?
     var data: Data
 }

@@ -69,7 +69,7 @@ class MusicModel: ObservableObject {
                 }
                 if let data = data {
                     let musicDto = try! JSONDecoder().decode(MusicDTO.self, from: data)
-                    let music = Music(name: "", url: "", data: Data(base64Encoded: musicDto.resultFile) ?? Data())
+                    let music = Music(name: "", data: Data(base64Encoded: musicDto.resultFile) ?? Data())
                     
                     print(musicDto)
                     DispatchQueue.main.async {
@@ -88,28 +88,6 @@ class MusicModel: ObservableObject {
             print(error.localizedDescription)
         }
         
-    }
-    
-    func musicPlay(music: Music) {
-        
-        // MARK: - 실제 파일을 가지고 있는 경우
-        if let musicURL = Bundle.main.url(forResource: music.url, withExtension: TYPE.wav.rawValue) {
-            do {
-                self.player = try AVAudioPlayer(contentsOf: musicURL)
-                self.player.play()
-            } catch {
-                print("음악 재생 중 오류 발생: \(error.localizedDescription)")
-            }
-        }
-        // MARK: - DATA를 직접 플레이하는 경우
-        else {
-            do {
-                self.player = try AVAudioPlayer(data: music.data)
-                self.player.play()
-            } catch {
-                print("음악 재생 중 오류 발생: \(error.localizedDescription)")
-            }
-        }
     }
     
 }
