@@ -55,7 +55,7 @@ struct MusicSelectView: View {
                 }
                 .padding()
                 .border(Color.white)
-
+                
                 // MR 섹션
                 VStack {
                     HStack {
@@ -83,35 +83,26 @@ struct MusicSelectView: View {
                 }
                 .padding()
                 .border(Color.white)
-
-                Spacer()
-
-                // MusicPlayView로 이동하는 링크
                 
+                Spacer()
+                
+                // MusicPlayView로 이동하는 링크
                 NavigationLink(destination: MusicPlayView()
-                    .environmentObject(musicModel)) {
+                    .environmentObject(musicModel)
+                    .environmentObject(audioPlayerViewModel)
+                    .onAppear {
+                        musicModel.upload(file1: Music(name: "", data: Data(count: 100)), file2: Music(name: "", data: Data(count: 100)))
+                    }
+                )
+                {
                     ZStack {
                         Capsule()
                             .frame(width: 300, height: 50)
                             .foregroundColor(.blue)
                         
-                        if musicModel.isLoading {
-                            ProgressView()
-                        } else {
-                            Text("Music Play")
-                                .foregroundColor(.white)
-                        }
+                        Text("Music Play")
+                            .foregroundColor(.white)
                     }
-                }
-                .onTapGesture {
-                    musicModel.isLoading = true
-                    Task {
-                        await musicModel.upload(file1: Music(name: "", data: Data(count: 100)), file2: Music(name: "", data: Data(count: 100))) { music in
-                            
-                        }
-                    }
-                    
-
                 }
             }
             .padding()
@@ -122,16 +113,18 @@ struct MusicSelectView: View {
                 switch result {
                 case .success(let urls):  // 성공적으로 URL을 가져왔을 때
                     guard let url = urls.first else { return }
-
+                    
                     let fileName = url.lastPathComponent
                     
                     if isSampleSelected {
                         sampleMusicName = fileName  // Sample 파일의 이름 업데이트
                         audioPlayerViewModel.initializePlayer(with: url)  // 오디오 플레이어 초기화
+                        musicModel.sampleMusic = Music(name: "", data: try! Data(contentsOf: url))
                     } else {
                         mrMusicName = fileName  // MR 파일의 이름 업데이트
+                        musicModel.targetMusic = Music(name: "", data: try! Data(contentsOf: url))
                     }
-
+                    
                 case .failure(let error):  // 파일 선택 실패 시 에러 처리
                     print("Error selecting file: \(error.localizedDescription)")
                 }

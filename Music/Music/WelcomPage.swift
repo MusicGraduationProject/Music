@@ -122,7 +122,10 @@ struct WelcomePage: View {
 }
 struct WelcomePage_Previews: PreviewProvider {
     static var previews: some View {
-        WelcomePage()
-            .environmentObject(MusicModel())
+        NavigationView {
+            WelcomePage()
+                .environmentObject(MusicModel())
+        }
+        
     }
 }

@@ -26,7 +26,7 @@ class MusicModel: ObservableObject {
     
     @Published var player: AVAudioPlayer = AVAudioPlayer()
     
-    @Published var baseRythm: Music? = nil
+    @Published var sampleMusic: Music? = nil
     @Published var targetMusic: Music? = nil
     @Published var generatedMusic: Music? = nil
     
@@ -44,14 +44,12 @@ class MusicModel: ObservableObject {
         }
     }
     
-    func upload(file1: Music, file2: Music, completionHandler: @escaping((Music) -> Void)) async {
-        
+    func upload(file1: Music, file2: Music) {
         do {
             DispatchQueue.main.async { self.isLoading = true }
             
             let fileData1 = file1.data.base64EncodedString()
             let fileData2 = file2.data.base64EncodedString()
-            
             let parameters: [String: Any] = [
                 "file1": fileData1,
                 "file2": fileData2
@@ -69,18 +67,17 @@ class MusicModel: ObservableObject {
                     print("Upload failed with error: \(error)")
                     return
                 }
-                
                 if let data = data {
                     let musicDto = try! JSONDecoder().decode(MusicDTO.self, from: data)
                     let music = Music(name: "", url: "", data: Data(base64Encoded: musicDto.resultFile) ?? Data())
                     
+                    print(musicDto)
                     DispatchQueue.main.async {
                         self.isLoading = false
                         self.loadingDone = true
                         self.generatedMusic = music
                     }
                     
-                    completionHandler(music)
                 } else {
                     print("Failed to decode response.")
                 }
