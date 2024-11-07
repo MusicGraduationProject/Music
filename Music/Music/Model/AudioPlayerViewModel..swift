@@ -25,4 +25,24 @@ class AudioPlayerViewModel: ObservableObject {
             isPlaying = true
         }
     }
+    
+    func playGeneratedMusic(music: Music) {
+        do {
+            self.audioPlayer = try AVAudioPlayer(data: music.data)
+            self.audioPlayer?.prepareToPlay()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        guard let player = self.audioPlayer else { return }
+        if player.isPlaying {
+            player.pause()
+            isPlaying = false
+        } else {
+            player.play()
+            isPlaying = true
+        }
+    }
+    
+    
 }
