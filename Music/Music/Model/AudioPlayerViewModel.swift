@@ -14,7 +14,7 @@ class AudioPlayerViewModel: ObservableObject {
         }
     }
     
-    // 음악 재생 및 일시정지
+   // 음악 재생 및 일시정지
     func playOrPause() {
         guard let player = audioPlayer else { return }
         if player.isPlaying {
@@ -46,3 +46,39 @@ class AudioPlayerViewModel: ObservableObject {
     
     
 }
+
+
+//
+//class AudioPlayerViewModel: ObservableObject {
+//    @Published var isPlaying = false
+//    private var player: AVAudioPlayer?
+//
+//    func initializePlayer(with url: URL) {
+//        do {
+//            player = try AVAudioPlayer(contentsOf: url)
+//        } catch {
+//            print("Error initializing player: \(error)")
+//        }
+//    }
+//
+//    func playOrPause(otherPlayer: AudioPlayerViewModel) {
+//        if isPlaying {
+//            pause()
+//        } else {
+//            if otherPlayer.isPlaying {
+//                otherPlayer.pause()
+//            }
+//            play()
+//        }
+//    }
+//
+//    private func play() {
+//        player?.play()
+//        isPlaying = true
+//    }
+//
+//    func pause() {
+//        player?.pause()
+//        isPlaying = false
+//    }
+//}
