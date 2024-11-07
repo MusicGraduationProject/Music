@@ -1,21 +1,22 @@
+
 import SwiftUI
 import AVFoundation
 
 struct MusicSelectView: View {
-    @EnvironmentObject var musicModel: MusicModel  // environmentObject로 전달된 MusicModel 사용
+    @EnvironmentObject var musicModel: MusicModel
     @State private var showFilePicker = false
     @State private var sampleMusicName: String = "음악 이름"
     @State private var mrMusicName: String = "음악 이름"
     @State private var isSampleSelected = true
     
-    @StateObject private var audioPlayerViewModel = AudioPlayerViewModel()  // 오디오 플레이어 상태 관리
+    @StateObject private var sampleAudioPlayerViewModel = AudioPlayerViewModel()
+    @StateObject private var mrAudioPlayerViewModel = AudioPlayerViewModel()
     
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 20) {
-                
                 // Sample 섹션
                 VStack {
                     HStack {
@@ -41,12 +42,11 @@ struct MusicSelectView: View {
                             .foregroundColor(.white)
                     }
                     
-                    // 음악 파일이 선택되면 재생 버튼 표시
                     if sampleMusicName != "음악 이름" {
                         Button(action: {
-                            audioPlayerViewModel.playOrPause()
+                            sampleAudioPlayerViewModel.playGeneratedMusic(music:  musicModel.generatedMusic!)
                         }) {
-                            Image(systemName: audioPlayerViewModel.isPlaying ? "pause.circle" : "play.circle")
+                            Image(systemName: sampleAudioPlayerViewModel.isPlaying ? "pause.circle" : "play.circle")
                                 .resizable()
                                 .frame(width: 50, height: 50)
                                 .foregroundColor(.white)
@@ -54,7 +54,12 @@ struct MusicSelectView: View {
                     }
                 }
                 .padding()
-                .border(Color.white)
+                .background(Color(red: 0.8, green: 0.7, blue: 1.0))
+                .cornerRadius(15)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(Color.white, lineWidth: 1)
+                )
                 
                 // MR 섹션
                 VStack {
@@ -80,21 +85,36 @@ struct MusicSelectView: View {
                         Text(mrMusicName)
                             .foregroundColor(.white)
                     }
+                    
+                    if mrMusicName != "음악 이름" {
+                        Button(action: {
+                            mrAudioPlayerViewModel.playOrPause()
+                        }) {
+                            Image(systemName: mrAudioPlayerViewModel.isPlaying ? "pause.circle" : "play.circle")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.white)
+                        }
+                    }
                 }
                 .padding()
-                .border(Color.white)
+                .background(Color(red: 0.8, green: 0.7, blue: 1.0))
+                .cornerRadius(15)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(Color.white, lineWidth: 1)
+                )
                 
                 Spacer()
                 
                 // MusicPlayView로 이동하는 링크
                 NavigationLink(destination: MusicPlayView()
                     .environmentObject(musicModel)
-                    .environmentObject(audioPlayerViewModel)
+                    .environmentObject(sampleAudioPlayerViewModel)
                     .onAppear {
                         musicModel.upload(file1: Music(name: "", data: Data(count: 100)), file2: Music(name: "", data: Data(count: 100)))
                     }
-                )
-                {
+                ) {
                     ZStack {
                         Capsule()
                             .frame(width: 300, height: 50)
@@ -107,25 +127,25 @@ struct MusicSelectView: View {
             }
             .padding()
         }
-        // 파일 선택기 호출 및 결과 처리
         .sheet(isPresented: $showFilePicker) {
             DocumentPicker(allowedTypes: ["public.audio"]) { result in
                 switch result {
-                case .success(let urls):  // 성공적으로 URL을 가져왔을 때
+                case .success(let urls):
                     guard let url = urls.first else { return }
                     
                     let fileName = url.lastPathComponent
                     
                     if isSampleSelected {
-                        sampleMusicName = fileName  // Sample 파일의 이름 업데이트
-                        audioPlayerViewModel.initializePlayer(with: url)  // 오디오 플레이어 초기화
+                        sampleMusicName = fileName
+                        sampleAudioPlayerViewModel.initializePlayer(with: url)
                         musicModel.sampleMusic = Music(name: "", data: try! Data(contentsOf: url))
                     } else {
-                        mrMusicName = fileName  // MR 파일의 이름 업데이트
+                        mrMusicName = fileName
+                        mrAudioPlayerViewModel.initializePlayer(with: url)
                         musicModel.targetMusic = Music(name: "", data: try! Data(contentsOf: url))
                     }
                     
-                case .failure(let error):  // 파일 선택 실패 시 에러 처리
+                case .failure(let error):
                     print("Error selecting file: \(error.localizedDescription)")
                 }
             }
@@ -138,6 +158,6 @@ struct MusicSelectView_Previews: PreviewProvider {
         NavigationView {
             MusicSelectView().environmentObject(MusicModel())
         }
-        
+
     }
 }
